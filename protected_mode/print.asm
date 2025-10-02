@@ -12,9 +12,9 @@ print_string_pm_loop:
     mov ah, WHITE_ON_BLACK ; set colour
 
     cmp al, 0 ; check for end of print_string_pm
-    je done
+    je print_string_pm_done
 
-    move [edx], ax ; Store char and attributes at current character cell
+    mov [edx], ax ; Store char and attributes at current character cell
 
     add ebx, 1 ; next char
     add edx, 2 ; next char cell
