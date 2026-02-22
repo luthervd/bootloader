@@ -1,4 +1,5 @@
 disk_load:
+    
     push dx
     mov ah, 0x02   ; bios read sector
     mov al, dh     ; read number of sectors as specified in DH
@@ -9,9 +10,13 @@ disk_load:
 
     jc disk_error  ; jump if carry flag set 
 
+    
     pop dx         ; restore dx from stack
     cmp dh, al     ; check if sectors requested (DH) equals sectors read (al)
     jne disk_error ; Jump if not equal
+    mov bx, DISK_SUCCESS
+    call print_string
+%include "../functions/print_hex.asm"
     ret 
 
 disk_error:
@@ -20,3 +25,4 @@ disk_error:
     jmp $ 
 
 DISK_ERROR_MSG db "Disk read error !", 0
+DISK_SUCCESS db "Disk read successful !", 0
